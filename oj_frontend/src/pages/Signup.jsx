@@ -1,13 +1,15 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useRegisterUserMutation } from "../redux/slices/apiSlice";
+import { Spinner } from "@fluentui/react-components";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [registerUser, { data, error, isLoading }] = useRegisterUserMutation();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -23,13 +25,14 @@ const Signup = () => {
       };
 
       try {
-        const res = await axios.post("http://localhost:8080/api/register", reqObj);
-        navigate("/login")
+        const res = await registerUser(reqObj).unwrap();
+        navigate("/login");
       } catch (error) {
         toast.error(error?.data?.message || error.error);
       }
     }
   };
+  console.log(data, error, isLoading);
 
   return (
     <div
@@ -105,12 +108,16 @@ const Signup = () => {
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#527450] hover:bg-[#527450] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#527450]"
-            >
-              Sign up
-            </button>
+            {isLoading ? (
+              <Spinner label="Loading..." />
+            ) : (
+              <button
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#527450] hover:bg-[#527450] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#527450]"
+              >
+                Sign up
+              </button>
+            )}
           </div>
         </form>
       </div>
