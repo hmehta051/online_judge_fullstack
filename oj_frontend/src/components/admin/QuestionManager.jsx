@@ -8,7 +8,6 @@ import {
   useGetQuestionQuery,
 } from "../../redux/slices/apiSlice";
 import { useParams, useNavigate } from "react-router-dom";
-import { questions } from "../../utils/question";
 
 const QuestionManager = () => {
   const navigate = useNavigate();
@@ -18,7 +17,12 @@ const QuestionManager = () => {
   const [updateQuestion] = useUpdateQuestionMutation();
   const [deleteQuestion] = useDeleteQuestionMutation();
 
-  // const { data: questions, error, isLoading, refetch } = useGetAllQuestionQuery();
+  const {
+    data: questions,
+    error,
+    isLoading,
+    refetch,
+  } = useGetAllQuestionQuery();
 
   const { data: question, isLoading: isQuestionLoading } = useGetQuestionQuery(
     quesId,
@@ -92,7 +96,7 @@ const QuestionManager = () => {
         boilerPlate: "",
         testCase: [{ input: "", output: "" }],
       });
-      navigate("/");
+      refetch();
     } catch (error) {
       console.error("Failed to save the question: ", error);
     }
@@ -102,15 +106,14 @@ const QuestionManager = () => {
     try {
       await deleteQuestion(quesId).unwrap();
       refetch();
-      // Optionally, refetch the questions or update the state
     } catch (error) {
       console.error("Failed to delete the question: ", error);
     }
   };
 
-  // if (isLoading) return <div>Loading questions...</div>;
-  // if (isQuestionLoading) return <div>Loading question details...</div>;
-  // if (error) return <div>Error loading questions</div>;
+  if (isLoading) return <div>Loading questions...</div>;
+  if (isQuestionLoading) return <div>Loading question details...</div>;
+  if (error) return <div>Error loading questions</div>;
 
   return (
     <div className="mt-10">
@@ -266,28 +269,28 @@ const QuestionManager = () => {
       </form>
       {!questions ? (
         "Loading..."
-      ) : questions.length > 0 ? (
+      ) : questions.questions.length > 0 ? (
         <div>
           <h1 className="text-2xl font-bold text-center text-gray-800 my-4">
             Questions List
           </h1>
-          
+
           <ul>
-            {questions.map((question) => (
+            {questions.questions.map((question) => (
               <li
-                key={question.id}
+                key={question._id}
                 className="mb-4 p-4 border rounded-md shadow-sm"
               >
                 <h2 className="text-xl font-semibold">{question.title}</h2>
                 <div className="flex space-x-2 mt-2">
                   <button
                     className="bg-blue-500 text-white px-3 py-1 rounded-md"
-                    onClick={()=>console.log(question)}
+                    onClick={() => navigate(`/admin/update/question/${question._id}`)}
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(question.id)}
+                    onClick={() => handleDelete(question._id)}
                     className="bg-red-500 text-white px-3 py-1 rounded-md"
                   >
                     Delete

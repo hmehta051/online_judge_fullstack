@@ -41,13 +41,13 @@ export const apiSlice = createApi({
     }),
     updateQuestion: builder.mutation({
       query: (quesData) => ({
-        url: `/questions/${quesData.quesId}`,
+        url: `/questions/${quesData._id}`,
         method: "PUT",
         body: quesData,
       }),
     }),
     deleteQuestion: builder.mutation({
-      query: () => ({
+      query: (quesId) => ({
         url: `/questions/${quesId}`,
         method: "DELETE",
       }),

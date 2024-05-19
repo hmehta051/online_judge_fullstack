@@ -4,13 +4,7 @@ const cors = require('cors')
 const authControllers = require("./controllers/authControllers.js");
 const questionsControllers = require("./controllers/questionsController.js");
 const cookieParser = require('cookie-parser')
-
-// Load environment variables based on NODE_ENV
-if (process.env.NODE_ENV === 'production') {
-    dotenv.config({ path: '.env' });
-} else {
-    dotenv.config({ path: '.env.development' });
-}
+dotenv.config({ path: '.env' });
 
 const app= express();
 app.use(cors())

@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node src/server",
-    "server:dev": "NODE_ENV=development nodemon src/server",
-    "server:prod": "NODE_ENV=production nodemon src/server"
+    "start": "node src/server",
+    "server:dev": "nodemon src/server",
+    "server:prod": "nodemon src/server"
   },
   "keywords": [],
   "author": "",

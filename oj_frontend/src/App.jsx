@@ -7,6 +7,7 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import PrivateRoute from "./components/PrivateRoute";
 import QuestionManager from "./components/admin/QuestionManager";
+import EditQuestion from "./components/admin/EditQuestion";
 const App = () => {
   return (
     <Router>
@@ -14,11 +15,12 @@ const App = () => {
         <Route element={<Layout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/admin/add/questions" element={<QuestionManager  />} />
+          {/* <Route path="/admin/add/questions" element={<QuestionManager  />} /> */}
           <Route element={<Layout />}>
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
-              {/* <Route path="/admin/add/questions" element={<QuestionManager  />} /> */}
+              <Route path="/admin/add/questions" element={<QuestionManager  />} />
+              <Route path="/admin/update/question/:quesId" element={<EditQuestion  />} />
               {/* Add other protected routes here */}
             </Route>
           </Route>

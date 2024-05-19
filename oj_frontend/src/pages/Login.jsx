@@ -28,12 +28,13 @@ const Login = () => {
       const res = await loginUser(formData).unwrap();
       if (res.status === "success") {
         // Assuming you have received the response object from the login request
-        const token = res.data.token;
+        const token = res.token;
         const decoded = jwtDecode(token);
+        console.log(decoded)
         Cookies.set("token", token, { expires: 1, secure: true }); // Example options, adjust as needed
         
         if(decoded.isAdmin){
-          navigate("admin/add/questions")
+          navigate("/admin/add/questions")
         }else{
           navigate("/");
         }
