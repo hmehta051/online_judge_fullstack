@@ -2,14 +2,17 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { useLoginUserMutation } from "../redux/slices/apiSlice";
+import { Spinner } from "@fluentui/react-components";
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
+  const [loginUser, { data, error, isLoading }] = useLoginUserMutation();
 
   const handleChange = (e) => {
     setFormData({
@@ -22,21 +25,21 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:8080/api/login", formData);
-      if (res.data.status === "success") {
+      const res = await loginUser(formData).unwrap();
+      if (res.status === "success") {
         // Assuming you have received the response object from the login request
         const token = res.data.token;
         const decoded = jwtDecode(token);
-        console.log(decoded)
-
-        // Set the received token as a cookie
         Cookies.set("token", token, { expires: 1, secure: true }); // Example options, adjust as needed
-
-        navigate("/");
+        
+        if(decoded.isAdmin){
+          navigate("admin/add/questions")
+        }else{
+          navigate("/");
+        }
       }
-      console.log(res);
     } catch (error) {
-        toast.error(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error);
     }
   };
 
@@ -90,12 +93,16 @@ const Login = () => {
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#527450] hover:bg-[#527450] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#527450]"
-            >
-              Login
-            </button>
+            {isLoading ? (
+              <Spinner label="Loading..." />
+            ) : (
+              <button
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#527450] hover:bg-[#527450] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#527450]"
+              >
+                Login
+              </button>
+            )}
           </div>
         </form>
       </div>
