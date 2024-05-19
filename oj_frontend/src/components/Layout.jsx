@@ -12,7 +12,7 @@ const Layout = () => {
       <div className="fixed top-0 z-50 w-full bg-white">
         <Navbar />
       </div>
-      <div className="pt-20"> {/* Add padding top */}
+      <div className="pt-12"> {/* Add padding top */}
         <Outlet />
       </div>
       {/* <Footer /> */}
