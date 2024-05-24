@@ -32,6 +32,20 @@ export const apiSlice = createApi({
         body: userData,
       }),
     }),
+    logoutUser: builder.mutation({
+      query: () => ({
+        url: "/logout",
+        method: "POST",
+      }),
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          Cookies.remove("token");
+        } catch (err) {
+          console.error("Logout failed: ", err);
+        }
+      },
+    }),
     addQuestion: builder.mutation({
       query: (quesData) => ({
         url: "/questions/create",
@@ -68,6 +82,7 @@ export const apiSlice = createApi({
 export const {
   useRegisterUserMutation,
   useLoginUserMutation,
+  useLogoutUserMutation,
   useAddQuestionMutation,
   useUpdateQuestionMutation,
   useDeleteQuestionMutation,
