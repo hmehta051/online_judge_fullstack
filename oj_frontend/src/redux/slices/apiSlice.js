@@ -1,6 +1,7 @@
 // src/redux/slices/apiSlice.js
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 export const apiSlice = createApi({
   reducerPath: "ojApi",
@@ -43,6 +44,7 @@ export const apiSlice = createApi({
           Cookies.remove("token");
         } catch (err) {
           console.error("Logout failed: ", err);
+          toast.error("Logout failed: ", err);
         }
       },
     }),
