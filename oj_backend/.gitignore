@@ -1,7 +1,19 @@
-node_modules
-src/helper/outputs
-src/helper/inputs
-src/helper/codes
-package-lock.json
-.env
+# Ignore node_modules directory
+node_modules/
+
+# Ignore helper directories
+src/helper/outputs/
+src/helper/inputs/
+src/helper/codes/
+
+# Ignore environment files
+.env.production
 .env.local
+.env
+
+# Ignore package-lock.json (if you use yarn, you might also want to ignore yarn.lock)
+package-lock.json
+
+# Additional ignores (if needed)
+.DS_Store
+*.log
