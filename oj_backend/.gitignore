@@ -1,1 +1,7 @@
 node_modules
+src/helper/outputs
+src/helper/inputs
+src/helper/codes
+package-lock.json
+.env
+.env.local
