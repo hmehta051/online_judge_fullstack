@@ -5,7 +5,7 @@ const { exec } = require("child_process");
 const outputDir = path.join(__dirname, "outputs");
 
 if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+  fs.mkdirSync(outputDir, { recursive: true });
 }
 
 // // example.js
@@ -25,27 +25,26 @@ if (!fs.existsSync(outputDir)) {
 // });
 
 const executeJs = async (filePath, inputFilePath) => {
+  return new Promise((resolve, reject) => {
+    // Construct the command to execute, ensuring proper escaping of file paths
+    const command = `node "${filePath}" < "${inputFilePath}"`;
 
-    return new Promise((resolve, reject) => {
-        // Construct the command to execute, ensuring proper escaping of file paths
-        const command = `node "${filePath}" < "${inputFilePath}"`;
-
-        // Execute the command
-        exec(command, (err, stdout, stderr) => {
-            if (err) {
-                // Reject with detailed error message
-                reject(`Execution failed: ${err}`);
-                return;
-            }
-            if (stderr) {
-                // Reject with stderr output
-                reject(`Execution failed: ${stderr}`);
-                return;
-            }
-            // Resolve with stdout output
-            resolve(stdout);
-        });
+    // Execute the command
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        // Reject with detailed error message
+        reject(`Execution failed: ${err}`);
+        return;
+      }
+      if (stderr) {
+        // Reject with stderr output
+        reject(`Execution failed: ${stderr}`);
+        return;
+      }
+      // Resolve with stdout output
+      resolve(stdout);
     });
+  });
 };
 
 module.exports = { executeJs };

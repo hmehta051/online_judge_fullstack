@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import {
   useAddQuestionMutation,
   useUpdateQuestionMutation,
-  useGetQuestionQuery
+  useGetQuestionQuery,
 } from "../../redux/slices/apiSlice";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -17,7 +17,7 @@ const QuestionManager = () => {
 
   const { data: question, isLoading: isQuestionLoading } = useGetQuestionQuery(
     quesId,
-    { skip: !quesId }
+    { skip: !quesId },
   );
   const [formData, setFormData] = useState({
     title: "",
@@ -87,14 +87,12 @@ const QuestionManager = () => {
         boilerPlate: "",
         testCase: [{ input: "", output: "" }],
       });
-      navigate("/admin/questions")
+      navigate("/admin/questions");
     } catch (error) {
-      toast.error("Failed to save the question: ", error)
+      toast.error("Failed to save the question: ", error);
       console.error("Failed to save the question: ", error);
     }
   };
-
-
 
   // if (isLoading) return <div>Loading questions...</div>;
   // if (isQuestionLoading) return <div>Loading question details...</div>;
@@ -102,8 +100,11 @@ const QuestionManager = () => {
 
   return (
     <div className="mt-4">
-      <Link to="/admin/questions" className="ml-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-          Go to Question List
+      <Link
+        to="/admin/questions"
+        className="ml-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+      >
+        Go to Question List
       </Link>
 
       <h1 className="text-2xl font-bold text-center text-gray-800 my-4">

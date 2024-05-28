@@ -8,10 +8,10 @@ import { toast } from "react-toastify";
 
 const EditQuestion = () => {
   const { quesId } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { data: question, isLoading: isQuestionLoading } = useGetQuestionQuery(
     quesId,
-    { skip: !quesId }
+    { skip: !quesId },
   );
   const [updateQuestion] = useUpdateQuestionMutation();
   const [newTitle, setNewTitle] = useState("");
@@ -47,12 +47,12 @@ const EditQuestion = () => {
         topic: newTopic || question.question.topic,
         initialCode: newInitialCode || question.question.initialCode,
         boilerPlate: newBoilerPlateCode || question.question.boilerPlate,
-        testCase: testCases || question.question.testCase
+        testCase: testCases || question.question.testCase,
       }).unwrap();
-      navigate("/admin/add/questions")
+      navigate("/admin/add/questions");
     } catch (error) {
       // Handle error
-      toast.error("Error updating question:", error)
+      toast.error("Error updating question:", error);
       console.error("Error updating question:", error);
     }
   };

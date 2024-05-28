@@ -92,11 +92,11 @@ export const apiSlice = createApi({
         url: `/questions/all`,
       }),
     }),
-    getSolutions:builder.query({
-      query:()=>({
-        url:`/solutions/submiited-questions`
-      })
-    })
+    getSolutions: builder.query({
+      query: () => ({
+        url: `/solutions/submiited-questions`,
+      }),
+    }),
   }),
 });
 
@@ -111,5 +111,5 @@ export const {
   useSubmitQuestionMutation,
   useGetQuestionQuery,
   useGetAllQuestionQuery,
-  useGetSolutionsQuery
+  useGetSolutionsQuery,
 } = apiSlice;

@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import PrivateRoute from "./components/PrivateRoute";
 import QuestionManager from "./components/admin/QuestionManager";
 import EditQuestion from "./components/admin/EditQuestion";
-import SingleQuestion  from "./components/users/SingleQuestion";
+import SingleQuestion from "./components/users/SingleQuestion";
 import QuestionList from "./components/admin/QuestionList";
 const App = () => {
   return (
@@ -21,8 +21,14 @@ const App = () => {
           <Route element={<Layout />}>
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
-              <Route path="/admin/add/questions" element={<QuestionManager  />} />
-              <Route path="/admin/update/question/:quesId" element={<EditQuestion  />} />
+              <Route
+                path="/admin/add/questions"
+                element={<QuestionManager />}
+              />
+              <Route
+                path="/admin/update/question/:quesId"
+                element={<EditQuestion />}
+              />
               <Route path="/question/:quesId" element={<SingleQuestion />} />
               <Route path="/admin/questions" element={<QuestionList />} />
               {/* Add other protected routes here */}

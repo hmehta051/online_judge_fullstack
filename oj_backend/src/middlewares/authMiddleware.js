@@ -4,11 +4,13 @@ const User = require("../models/user.model");
 const authMiddleware = async (req, res, next) => {
   try {
     // Retrieving token from authorization header
-    const authHeader = req.headers['authorization'];
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ message: "Authorization header is missing or invalid" });
+    const authHeader = req.headers["authorization"];
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res
+        .status(401)
+        .json({ message: "Authorization header is missing or invalid" });
     }
-    const token = authHeader.split(' ')[1];
+    const token = authHeader.split(" ")[1];
 
     // Verifying token
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -17,7 +19,7 @@ const authMiddleware = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
-    
+
     // Assigning user to the request object
     req.user = user;
     next();

@@ -12,7 +12,7 @@ const generateToken = (user) => {
       userId: user._id,
     },
     process.env.JWT_SECRET_KEY,
-    { expiresIn: "7d" }
+    { expiresIn: "7d" },
   );
 };
 
@@ -46,7 +46,7 @@ router.post(
     } catch (error) {
       res.status(500).json({ status: "error", message: error.message });
     }
-  }
+  },
 );
 
 router.post(
@@ -103,7 +103,7 @@ router.post(
     } catch (error) {
       res.status(500).json({ status: "error", message: error.message });
     }
-  }
+  },
 );
 
 router.post("/logout", (req, res) => {

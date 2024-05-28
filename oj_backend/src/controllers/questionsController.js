@@ -61,7 +61,7 @@ router.put("/:id", async (req, res) => {
     const updatedQuestion = await Question.findByIdAndUpdate(
       questionId,
       updatedQuestionData,
-      { new: true }
+      { new: true },
     );
     return res.status(200).json({ status: "success", updatedQuestion });
   } catch (error) {

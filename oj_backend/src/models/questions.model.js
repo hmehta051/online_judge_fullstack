@@ -8,7 +8,7 @@ const questionSchema = new mongoose.Schema(
     constraints: { type: String, required: true },
     topic: { type: String, required: true },
     initialCode: { type: String, required: true },
-    boilerPlateCode : {type:String,required: false},
+    boilerPlateCode: { type: String, required: false },
     testCase: [
       {
         input: { type: String, required: true },
@@ -19,9 +19,9 @@ const questionSchema = new mongoose.Schema(
   {
     versionKey: false,
     timestamps: true,
-  }
+  },
 );
 
-const QuestionsModel = new mongoose.model("Question",questionSchema);
+const QuestionsModel = new mongoose.model("Question", questionSchema);
 
-module.exports=QuestionsModel
+module.exports = QuestionsModel;
