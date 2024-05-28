@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 export const apiSlice = createApi({
   reducerPath: "ojApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api",
+    baseUrl: "http://localhost:5174/api",
     prepareHeaders: (headers, { getState, endpoint }) => {
       if (endpoint !== "/login" && endpoint !== "/register") {
         const token = Cookies.get("token"); // Use 'token' as a string instead of a variable
