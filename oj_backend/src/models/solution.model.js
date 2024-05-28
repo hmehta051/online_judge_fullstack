@@ -9,6 +9,7 @@ const solutionSchema = new mongoose.Schema(
     language: { type: String, required: true, default:"cpp" }, 
     status: { type: String, enum: ["Pending", "Accepted", "Wrong Answer", "Time Limit Exceeded", "Compilation Error", "Runtime Error"], default: "Pending" }, // Status of the solution
     timeTaken: { type: Number }, 
+    submitted: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
   },
   {

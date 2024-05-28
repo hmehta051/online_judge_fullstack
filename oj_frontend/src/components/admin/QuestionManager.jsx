@@ -3,9 +3,7 @@ import React, { useState, useEffect } from "react";
 import {
   useAddQuestionMutation,
   useUpdateQuestionMutation,
-  useDeleteQuestionMutation,
-  useGetAllQuestionQuery,
-  useGetQuestionQuery,
+  useGetQuestionQuery
 } from "../../redux/slices/apiSlice";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -16,13 +14,6 @@ const QuestionManager = () => {
 
   const [addQuestion] = useAddQuestionMutation();
   const [updateQuestion] = useUpdateQuestionMutation();
-
-  // const {
-  //   data: questions,
-  //   error,
-  //   isLoading,
-  //   refetch,
-  // } = useGetAllQuestionQuery();
 
   const { data: question, isLoading: isQuestionLoading } = useGetQuestionQuery(
     quesId,
@@ -111,11 +102,9 @@ const QuestionManager = () => {
 
   return (
     <div className="mt-4">
-      <button type="button" className="ml-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-        <Link to="/admin/questions">
+      <Link to="/admin/questions" className="ml-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
           Go to Question List
-        </Link>
-      </button>
+      </Link>
 
       <h1 className="text-2xl font-bold text-center text-gray-800 my-4">
         {quesId ? "Update Question" : "Add Question"}
@@ -221,7 +210,7 @@ const QuestionManager = () => {
                 <label className="block text-gray-700 font-bold mb-2">
                   Input
                 </label>
-                <input
+                <textarea
                   type="text"
                   name="input"
                   value={testCase.input}

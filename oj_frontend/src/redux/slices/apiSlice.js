@@ -68,6 +68,20 @@ export const apiSlice = createApi({
         method: "DELETE",
       }),
     }),
+    runtestCaseQuestion: builder.mutation({
+      query: (quesData) => ({
+        url: "/solutions/run",
+        method: "POST",
+        body: quesData,
+      }),
+    }),
+    submitQuestion: builder.mutation({
+      query: (quesData) => ({
+        url: "/solutions/submit",
+        method: "POST",
+        body: quesData,
+      }),
+    }),
     getQuestion: builder.query({
       query: (quesId) => ({
         url: `/questions/${quesId}`,
@@ -78,6 +92,11 @@ export const apiSlice = createApi({
         url: `/questions/all`,
       }),
     }),
+    getSolutions:builder.query({
+      query:()=>({
+        url:`/solutions/submiited-questions`
+      })
+    })
   }),
 });
 
@@ -88,6 +107,9 @@ export const {
   useAddQuestionMutation,
   useUpdateQuestionMutation,
   useDeleteQuestionMutation,
+  useRuntestCaseQuestionMutation,
+  useSubmitQuestionMutation,
   useGetQuestionQuery,
   useGetAllQuestionQuery,
+  useGetSolutionsQuery
 } = apiSlice;

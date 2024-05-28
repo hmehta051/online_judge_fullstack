@@ -20,14 +20,14 @@ const executeCpp = (filepath, inputPath) => {
             (error, stdout, stderr) => {
                 const endTime = process.hrtime(startTime); // End time measurement
                 const timeTaken = endTime[0] * 1000 + endTime[1] / 1000000; // Convert to milliseconds
-
+                
                 if (error) {
-                    reject({ error, stderr, timeTaken });
+                    reject({ error: error.message, stderr, timeTaken });
+                } else if (stderr) {
+                    reject({ error: 'Execution error', stderr, timeTaken });
+                } else {
+                    resolve({ stdout, timeTaken, filepath, inputPath });
                 }
-                if (stderr) {
-                    reject({ stderr, timeTaken });
-                }
-                resolve({ stdout, timeTaken,filepath, inputPath });
             }
         );
     });

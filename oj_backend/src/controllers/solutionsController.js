@@ -126,6 +126,52 @@ const { executePython } = require('../helper/executePython');
 const router = express.Router();
 
 // API to only run the code and display the output
+// router.post("/run", async (req, res) => {
+//     try {
+//         const { language = "cpp", code, input } = req.body;
+//         if (!code || !input) {
+//             return res.status(400).json({ status: "error", message: "Either Code or input are empty" });
+//         }
+
+//         let filePath, inputPath, output;
+
+//         // Execute code based on language
+//         switch (language.toLowerCase()) {
+//             case "cpp":
+//                 filePath = await generateFile(language, code);
+//                 inputPath = await generateInput(input);
+//                 output = await executeCpp(filePath, inputPath);
+//                 console.log(output)
+//                 break;
+//             case "js":
+//                 filePath = await generateFile(language, code);
+//                 inputPath = await generateInput(input);
+//                 output = await executeJs(filePath, inputPath);
+//                 break;
+//             case "java":
+//                 filePath = await generateFile(language, code);
+//                 inputPath = await generateInput(input);
+//                 output = await executeJava(filePath, inputPath);
+//                 break;
+//             case "python":
+//                 filePath = await generateFile(language, code);
+//                 inputPath = await generateInput(input);
+//                 output = await executePython(filePath, inputPath);
+//                 break;
+//             // Add more cases for other languages as needed
+//             default:
+//                 return res.status(400).json({ status: "error", message: "Unsupported language" });
+//         }
+
+
+
+//         return res.status(200).json({ status:"success", output });
+
+//     } catch (error) {
+//         return res.status(500).json({ status: "error", message: "Server error" });
+//     }
+// });
+
 router.post("/run", async (req, res) => {
     try {
         const { language = "cpp", code, input } = req.body;
@@ -135,39 +181,40 @@ router.post("/run", async (req, res) => {
 
         let filePath, inputPath, output;
 
-        // Execute code based on language
-        switch (language.toLowerCase()) {
-            case "cpp":
-                filePath = await generateFile(language, code);
-                inputPath = await generateInput(input);
-                output = await executeCpp(filePath, inputPath);
-                break;
-            case "js":
-                filePath = await generateFile(language, code);
-                inputPath = await generateInput(input);
-                output = await executeJs(filePath, inputPath);
-                break;
-            case "java":
-                filePath = await generateFile(language, code);
-                inputPath = await generateInput(input);
-                output = await executeJava(filePath, inputPath);
-                break;
-            case "python":
-                filePath = await generateFile(language, code);
-                inputPath = await generateInput(input);
-                output = await executePython(filePath, inputPath);
-                break;
-            // Add more cases for other languages as needed
-            default:
-                return res.status(400).json({ status: "error", message: "Unsupported language" });
-        }
+        try {
+            // Generate file and input paths
+            filePath = await generateFile(language, code);
+            inputPath = await generateInput(input);
 
-        return res.status(200).json({ output });
+            // Execute code based on language
+            switch (language.toLowerCase()) {
+                case "cpp":
+                    output = await executeCpp(filePath, inputPath);
+                    break;
+                case "js":
+                    output = await executeJs(filePath, inputPath);
+                    break;
+                case "java":
+                    output = await executeJava(filePath, inputPath);
+                    break;
+                case "python":
+                    output = await executePython(filePath, inputPath);
+                    break;
+                // Add more cases for other languages as needed
+                default:
+                    return res.status(400).json({ status: "error", message: "Unsupported language" });
+            }
+        } catch (execError) {
+            return res.status(500).json({ status: "error", message: execError.message, details: execError });
+        }
+        return res.status(200).json({ status: "success", output });
 
     } catch (error) {
-        return res.status(500).json({ status: "error", message: "Server error" });
+        console.error("Server Error:", error);
+        return res.status(500).json({ status: "error", message: "Server error", details: error.message });
     }
 });
+
 
 router.post("/submit", async (req, res) => {
     try {
@@ -186,34 +233,49 @@ router.post("/submit", async (req, res) => {
         let filePath;
         const testCases = question.testCase;
 
-        // Execute code based on language
-        switch (language.toLowerCase()) {
-            case "cpp":
-            case "js":
-            case "java":
-            case "python":
-                filePath = await generateFile(language, code);
-                break;
-            default:
-                return res.status(400).json({ status: "error", message: "Unsupported language" });
-        }
+        try {
+            // Execute code based on language
+            switch (language.toLowerCase()) {
+                case "cpp":
+                case "js":
+                case "java":
+                case "python":
+                    filePath = await generateFile(language, code);
+                    break;
+                default:
+                    return res.status(400).json({ status: "error", message: "Unsupported language" });
+            }
 
-        // Determine the status of the solution
-        const solutionDetails = await determineStatus(filePath, testCases, language);
-        const status = solutionDetails.message;
-        const solution = await SolutionModel.create({
-            userId,
-            questionId,
-            code,
-            language,
-            solutionDetails,
-            status
-        });
-        return res.status(201).json({ solution });
+            // Determine the status of the solution
+            const solutionDetails = await determineStatus(filePath, testCases, language);
+            const status = solutionDetails.message;
+            const solution = await SolutionModel.create({
+                userId,
+                questionId,
+                code,
+                language,
+                solutionDetails,
+                status,
+                submitted: true
+            });
+            return res.status(201).json({ status: "success", solution });
+        } catch (execError) {
+            return res.status(500).json({ status: "error", message: execError.message, details: execError });
+        }
 
     } catch (error) {
         console.error('Server Error:', error);
         return res.status(500).json({ status: "error", message: "Server error" });
+    }
+});
+
+// Get all solutions
+router.get('/submiited-questions', async (req, res) => {
+    try {
+        const solutions = await SolutionModel.find({});
+        res.status(200).send(solutions);
+    } catch (error) {
+        res.status(500).send(error);
     }
 });
 

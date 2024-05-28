@@ -153,7 +153,7 @@ const EditQuestion = () => {
           <div key={index} className="mb-4">
             <div className="mb-2">
               <label className="block mb-1">Input:</label>
-              <input
+              <textarea
                 type="text"
                 value={testCase.input}
                 onChange={(e) =>

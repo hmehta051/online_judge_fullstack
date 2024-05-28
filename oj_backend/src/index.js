@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api",authControllers);
-app.use(authMiddleware)
+app.use(authMiddleware);
 app.use('/api/solutions', solutionsController);
 app.use("/api/questions",questionsControllers);
 
