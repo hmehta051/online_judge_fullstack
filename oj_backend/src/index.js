@@ -6,7 +6,7 @@ const questionsControllers = require("./controllers/questionsController.js");
 const solutionsController = require("./controllers/solutionsController.js");
 const cookieParser = require("cookie-parser");
 const authMiddleware = require("./middlewares/authMiddleware.js");
-dotenv.config({ path: ".env.production" });
+dotenv.config({ path: ".env" });
 
 const app = express();
 app.use(cors());
