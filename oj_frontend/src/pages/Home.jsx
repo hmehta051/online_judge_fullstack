@@ -6,12 +6,12 @@ import {
 } from "../redux/slices/apiSlice";
 
 const Home = () => {
-  const { data, error, isLoading } = useGetAllQuestionQuery(); // Destructure query data
+  const { data, error, isLoading } = useGetAllQuestionQuery();
   const { data: solutionsData } = useGetSolutionsQuery();
 
-  if (isLoading) return <div>Loading questions...</div>; // Display loading indicator
+  if (isLoading) return <div>Loading questions...</div>; 
 
-  if (error) return <div>Error fetching questions: {error.message}</div>; // Handle errors gracefully
+  if (error) return <div>Error fetching questions: {error.message}</div>;
 
   return (
     <>

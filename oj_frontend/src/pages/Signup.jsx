@@ -8,7 +8,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [registerUser, { data, error, isLoading }] = useRegisterUserMutation();
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -107,7 +107,7 @@ const Signup = () => {
 
           <div>
             {isLoading ? (
-              <div role="status">
+              <button role="status" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#527450] hover:bg-[#527450] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#527450]">
                 <svg
                   aria-hidden="true"
                   className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
@@ -125,7 +125,7 @@ const Signup = () => {
                   />
                 </svg>
                 <span className="sr-only">Loading...</span>
-              </div>
+              </button>
             ) : (
               <button
                 type="submit"

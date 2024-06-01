@@ -10,6 +10,7 @@ import QuestionManager from "./components/admin/QuestionManager";
 import EditQuestion from "./components/admin/EditQuestion";
 import SingleQuestion from "./components/users/SingleQuestion";
 import QuestionList from "./components/admin/QuestionList";
+import AboutUs from "./pages/AboutUs";
 const App = () => {
   return (
     <Router>
@@ -17,7 +18,7 @@ const App = () => {
         <Route element={<Layout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          {/* <Route path="/admin/add/questions" element={<QuestionManager  />} /> */}
+          <Route path="/about-us" element={<AboutUs />} />
           <Route element={<Layout />}>
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
