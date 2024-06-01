@@ -13,7 +13,6 @@ export const QuestionsRender = ({ question, solutionsData }) => {
   const isAccepted = filteredSolutions.some((data) => data.submitted);
 
   return (
-    <>
       <div
         onClick={() => navigate(`/question/${question._id}`)}
         className="flex flex-col border rounded shadow-md p-4 mb-4"
@@ -36,6 +35,5 @@ export const QuestionsRender = ({ question, solutionsData }) => {
           <span className="text-gray-600">{question.topic}</span>
         </div>
       </div>
-    </>
   );
 };
