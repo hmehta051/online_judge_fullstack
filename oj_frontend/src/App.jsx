@@ -11,6 +11,7 @@ import EditQuestion from "./components/admin/EditQuestion";
 import SingleQuestion from "./components/users/SingleQuestion";
 import QuestionList from "./components/admin/QuestionList";
 import AboutUs from "./pages/AboutUs";
+import SubmissionScreen from "./components/users/SubmissionScreen";
 const App = () => {
   return (
     <Router>
@@ -19,21 +20,17 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/about-us" element={<AboutUs />} />
-          <Route element={<Layout />}>
-            <Route element={<PrivateRoute />}>
-              <Route path="/" element={<Home />} />
-              <Route
-                path="/admin/add/questions"
-                element={<QuestionManager />}
-              />
-              <Route
-                path="/admin/update/question/:quesId"
-                element={<EditQuestion />}
-              />
-              <Route path="/question/:quesId" element={<SingleQuestion />} />
-              <Route path="/admin/questions" element={<QuestionList />} />
-              {/* Add other protected routes here */}
-            </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/admin/add/questions" element={<QuestionManager />} />
+            <Route
+              path="/admin/update/question/:quesId"
+              element={<EditQuestion />}
+            />
+            <Route path="/question/:quesId" element={<SingleQuestion />} />
+            <Route path="/admin/questions" element={<QuestionList />} />
+            <Route path="/submission" element={<SubmissionScreen />} />
+            {/* Add other protected routes here */}
           </Route>
         </Route>
       </Routes>

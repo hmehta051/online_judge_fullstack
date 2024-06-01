@@ -26,7 +26,7 @@ const solutionSchema = new mongoose.Schema(
         "Runtime Error",
       ],
       default: "Pending",
-    }, // Status of the solution
+    },
     timeTaken: { type: Number },
     submitted: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },

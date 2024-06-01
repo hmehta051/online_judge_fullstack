@@ -1,8 +1,9 @@
 import React from "react";
 import { useLogoutUserMutation } from "../redux/slices/apiSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+import { FaHome, FaInfoCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const [logoutUser] = useLogoutUserMutation();
@@ -18,22 +19,25 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full h-full shadow-lg p-4 flex items-center justify-between">
+    <div className="w-full h-full shadow-lg p-4 flex items-center justify-between p-2 bg-gray-100">
       <img
         src="https://ik.imagekit.io/bksgfrlfg/logo_daad_dAnA.png?updatedAt=1716035561396"
         alt="CodeKing Logo"
-        width={200}
-        height={200}
-        className="w-[150px] md:w-[200px] sm:w-[150px]"
+        width={150}
+        height={150}
+        className="w-[150px] md:w-[150px] sm:w-[100px]"
       />
-      {Cookies.get("token") && (
-        <button
-          onClick={handleLogout}
-          className="px-6 py-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-        >
-          Logout
-        </button>
-      )}
+
+      <div className="flex items-center justify-between gap-4">
+        <Link to="/">
+          <FaHome size={24} />
+        </Link>
+        <Link to="/about-us">
+          <FaInfoCircle size={24} />
+        </Link>
+        <>{!Cookies.get("token") && <Link to="/login">Login</Link>}</>
+        <>{Cookies.get("token") && <div onClick={handleLogout}>Logout</div>}</>
+      </div>
     </div>
   );
 };

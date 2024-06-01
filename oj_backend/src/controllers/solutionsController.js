@@ -46,24 +46,20 @@ router.post("/run", async (req, res) => {
             .json({ status: "error", message: "Unsupported language" });
       }
     } catch (execError) {
-      return res
-        .status(500)
-        .json({
-          status: "error",
-          message: execError.message,
-          details: execError,
-        });
+      return res.status(500).json({
+        status: "error",
+        message: execError.message,
+        details: execError,
+      });
     }
     return res.status(200).json({ status: "success", output });
   } catch (error) {
     console.error("Server Error:", error);
-    return res
-      .status(500)
-      .json({
-        status: "error",
-        message: "Server error",
-        details: error.message,
-      });
+    return res.status(500).json({
+      status: "error",
+      message: "Server error",
+      details: error.message,
+    });
   }
 });
 
@@ -122,13 +118,11 @@ router.post("/submit", async (req, res) => {
       });
       return res.status(201).json({ status: "success", solution });
     } catch (execError) {
-      return res
-        .status(500)
-        .json({
-          status: "error",
-          message: execError.message,
-          details: execError,
-        });
+      return res.status(500).json({
+        status: "error",
+        message: execError.message,
+        details: execError,
+      });
     }
   } catch (error) {
     console.error("Server Error:", error);
@@ -136,13 +130,25 @@ router.post("/submit", async (req, res) => {
   }
 });
 
-// Get all solutions
-router.get("/submiited-questions", async (req, res) => {
+router.get("/submitted-questions/:userId", async (req, res) => {
+  const userId = req.params.userId;
   try {
-    const solutions = await SolutionModel.find({});
+    const solutions = await SolutionModel.find({ userId });
     res.status(200).send(solutions);
   } catch (error) {
     res.status(500).send(error);
+  }
+});
+
+router.get("/submission/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const solutions = await SolutionModel.find({ userId }).populate(
+      "questionId",
+    );
+    res.status(200).json(solutions);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

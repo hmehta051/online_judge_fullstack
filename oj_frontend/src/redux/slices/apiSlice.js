@@ -93,8 +93,13 @@ export const apiSlice = createApi({
       }),
     }),
     getSolutions: builder.query({
-      query: () => ({
-        url: `/solutions/submiited-questions`,
+      query: (userId) => ({
+        url: `/solutions/submitted-questions/${userId}`,
+      }),
+    }),
+    getShowSubmission: builder.query({
+      query: (userId) => ({
+        url: `/solutions/submission/${userId}`,
       }),
     }),
   }),
@@ -112,4 +117,5 @@ export const {
   useGetQuestionQuery,
   useGetAllQuestionQuery,
   useGetSolutionsQuery,
+  useGetShowSubmissionQuery,
 } = apiSlice;

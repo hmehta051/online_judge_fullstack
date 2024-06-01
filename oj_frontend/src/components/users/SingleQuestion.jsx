@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
+  useGetAllQuestionQuery,
   useGetQuestionQuery,
   useRuntestCaseQuestionMutation,
   useSubmitQuestionMutation,
@@ -16,10 +17,12 @@ import { toast } from "react-toastify";
 import TestCaseInputGuide from "./TestInputGuide";
 
 const SingleQuestion = () => {
+  const { refetch } = useGetAllQuestionQuery();
   const [runTestCaseQuestion, { isLoading: isRunTestLoading }] =
     useRuntestCaseQuestionMutation();
   const [submitQuestion, { isLoading: isSubmit }] = useSubmitQuestionMutation();
   const { quesId } = useParams();
+  const navigate = useNavigate();
   const { data: question, error, isLoading } = useGetQuestionQuery(quesId);
   const [value, setValue] = useState(
     "#include <iostream>\n\nint main() {\n\tstd::cout << 'Hello, World!' << std::endl;\n\treturn 0;\n}",
@@ -180,12 +183,23 @@ const SingleQuestion = () => {
 
   return (
     <>
-      <button
-        type="button"
-        className="ml-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-      >
-        <Link to="/">Go to Question List</Link>
-      </button>
+      <div>
+        <div
+          onClick={() => {
+            refetch();
+            navigate("/");
+          }}
+          className="w-[180px] ml-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        >
+          Go to Question List
+        </div>
+        <Link
+          to="/submission"
+          className=" w-[200px] ml-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        >
+          Submission
+        </Link>
+      </div>
       <div className="question-container container mx-auto px-4 py-8">
         <div className="text-2xl">Question: {question.question.title}</div>
         <div className="details flex items-center justify-between mb-4">
