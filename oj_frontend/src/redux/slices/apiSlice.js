@@ -98,8 +98,8 @@ export const apiSlice = createApi({
       }),
     }),
     getShowSubmission: builder.query({
-      query: (userId) => ({
-        url: `/solutions/submission/${userId}`,
+      query: ({ userId, questionId }) => ({
+        url: `/solutions/submission/${userId}/${questionId}`,
       }),
     }),
   }),

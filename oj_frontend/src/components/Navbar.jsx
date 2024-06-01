@@ -11,6 +11,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await logoutUser().unwrap();
+      localStorage.removeItem("userid");
       navigate("/login"); // Redirect to login page
     } catch (err) {
       toast.error("Logout failed: ", err);

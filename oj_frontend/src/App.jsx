@@ -29,7 +29,10 @@ const App = () => {
             />
             <Route path="/question/:quesId" element={<SingleQuestion />} />
             <Route path="/admin/questions" element={<QuestionList />} />
-            <Route path="/submission" element={<SubmissionScreen />} />
+            <Route
+              path="/submission/:questionId"
+              element={<SubmissionScreen />}
+            />
             {/* Add other protected routes here */}
           </Route>
         </Route>

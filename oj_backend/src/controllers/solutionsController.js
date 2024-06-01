@@ -140,10 +140,10 @@ router.get("/submitted-questions/:userId", async (req, res) => {
   }
 });
 
-router.get("/submission/:userId", async (req, res) => {
-  const userId = req.params.userId;
+router.get("/submission/:userId/:questionId", async (req, res) => {
+  const { userId, questionId } = req.params;
   try {
-    const solutions = await SolutionModel.find({ userId }).populate(
+    const solutions = await SolutionModel.find({ userId, questionId }).populate(
       "questionId",
     );
     res.status(200).json(solutions);
