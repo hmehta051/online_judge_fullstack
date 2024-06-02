@@ -35,6 +35,7 @@ const QuestionsRender = () => {
   return (
     <div className="max-w-4xl mx-auto mt-4">
       <div className="text-2xl my-2 w-[94%] m-auto">List of Questions</div>
+      <>
       {questionData.questions.map((question) => {
         // Filter solutions for the current question
         const filteredSolutions = solutionsData
@@ -71,6 +72,7 @@ const QuestionsRender = () => {
           </div>
         );
       })}
+      </>
     </div>
   );
 };
