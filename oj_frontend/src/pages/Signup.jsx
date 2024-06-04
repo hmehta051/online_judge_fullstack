@@ -34,7 +34,7 @@ const Signup = () => {
 
   return (
     <div
-      className="w-full bg-white-600 flex items-center justify-center flex-col bg-[#F5F5F5]"
+      className="w-full bg-white-600 flex items-center justify-center flex-col"
       style={{ minHeight: "calc(100vh - 80px)" }}
     >
       <div className="max-w-md w-[90%] sm:w-[90%] md:w-full space-y-8">
